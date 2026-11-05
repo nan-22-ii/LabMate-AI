@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LabMate AI – Your Smart Companion for Engineering Labs</title>
+  <meta name="description" content="Prepare for engineering lab experiments and ace your viva with LabMate AI.">
+
+  <!-- External libraries (need internet): Google font + Font Awesome icons -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+  <!-- Our own styles -->
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- =====================================================
+       NAVBAR
+       Sticky top bar. The menu button (.menu-toggle) is only
+       visible on mobile; script.js opens/closes #nav-menu.
+       ===================================================== -->
+  <header class="navbar" id="navbar">
+    <div class="wrap nav-inner">
+      <a href="#home" class="logo">
+        <span class="logo-mark"><i class="fa-solid fa-microscope"></i></span>LabMate AI
+      </a>
+
+      <!-- Each href must match a section id further down the page -->
+      <nav id="nav-menu" class="nav-menu" aria-label="Main navigation">
+        <a href="#home" class="nav-link active">Home</a>
+        <a href="#experiments" class="nav-link">My Experiments</a>
+        <a href="#guides" class="nav-link">Lab Guides</a>
+        <a href="#about" class="nav-link">About</a>
+      </nav>
+
+      <div class="nav-right">
+        <button class="avatar" aria-label="Profile">NN</button> <!-- change initials here -->
+        <button class="menu-toggle" id="menu-toggle" aria-label="Open menu" aria-expanded="false">
+          <i class="fa-solid fa-bars"></i>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main>
+
+    <!-- =====================================================
+         HERO
+         Left: heading + search form. Right: SVG illustration.
+         ===================================================== -->
+    <section class="hero" id="home">
+      <div class="wrap hero-grid">
+
+        <div class="hero-text">
+          <span class="badge"><i class="fa-solid fa-wand-magic-sparkles"></i> Lab prep, simplified</span>
+          <h1>Your Smart Companion for Engineering Labs</h1>
+          <p class="lead">Prepare for experiments, understand complex concepts, and ace your lab viva with AI-powered guidance.</p>
+
+          <!-- "novalidate" turns off the browser's default popups; script.js validates instead -->
+          <form class="search" id="search-form" novalidate>
+            <i class="fa-solid fa-flask search-icon"></i>
+            <input type="text" id="experiment" placeholder="Search your experiment (e.g., Study of Ohm's Law)" autocomplete="off" aria-label="Experiment name">
+            <button type="submit" id="generate-btn" class="btn-primary">
+              <span class="btn-label"><i class="fa-solid fa-wand-magic-sparkles"></i> Generate Lab Guide</span>
+              <span class="spinner" aria-hidden="true"></span> <!-- shown while "loading" -->
+            </button>
+          </form>
+
+          <!-- script.js writes validation errors and the placeholder result into these two -->
+          <p class="error" id="error-msg" role="alert"></p>
+          <div class="result" id="result" role="status"></div>
+
+          <p class="support">Type any experiment name and LabMate AI will build a guide with theory, apparatus, procedure and viva questions.</p>
+        </div>
+
+        <!-- Decorative illustration. aria-hidden hides it from screen readers. -->
+        <div class="hero-art" aria-hidden="true">
+          <svg viewBox="0 0 420 380" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <linearGradient id="g1" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#8b7cf6"/><stop offset="1" stop-color="#3b2fb8"/></linearGradient>
+              <linearGradient id="g2" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#c4b9ff"/><stop offset="1" stop-color="#6a5af0"/></linearGradient>
+            </defs>
+
+            <!-- Background rings -->
+            <circle cx="210" cy="190" r="165" fill="#ece8ff"/>
+            <circle cx="210" cy="190" r="110" fill="#f6f4ff" stroke="#d9d3ff" stroke-dasharray="4 6"/>
+
+            <!-- Molecule: bonds first, then atoms on top -->
+            <g stroke="#8b7cf6" stroke-width="4" stroke-linecap="round">
+              <line x1="120" y1="120" x2="210" y2="170"/><line x1="210" y1="170" x2="300" y2="110"/>
+              <line x1="210" y1="170" x2="230" y2="270"/><line x1="230" y1="270" x2="320" y2="300"/>
+            </g>
+            <g class="atoms"> <!-- .atoms circles float up and down (see style.css) -->
+              <circle cx="120" cy="120" r="20" fill="url(#g2)"/><circle cx="210" cy="170" r="30" fill="url(#g1)"/>
+              <circle cx="300" cy="110" r="18" fill="url(#g2)"/><circle cx="230" cy="270" r="22" fill="url(#g2)"/>
+              <circle cx="320" cy="300" r="14" fill="url(#g1)"/>
+            </g>
+
+            <!-- Flask: outline, liquid, rim -->
+            <path d="M85 235v30l-28 50a12 12 0 0 0 11 18h62a12 12 0 0 0 11-18l-28-50v-30z" fill="#fff" stroke="#5146c8" stroke-width="4" stroke-linejoin="round"/>
+            <path d="M68 315l-11 20a12 12 0 0 0 11 18h62a12 12 0 0 0 11-18l-11-20z" fill="#8b7cf6" opacity=".85"/>
+            <line x1="80" y1="235" x2="132" y2="235" stroke="#5146c8" stroke-width="4" stroke-linecap="round"/>
+          </svg>
+
+          <!-- Small floating labels on top of the illustration -->
+          <div class="float-card fc1"><i class="fa-solid fa-circle-check"></i> Viva questions ready</div>
+          <div class="float-card fc2"><i class="fa-solid fa-bolt"></i> Procedure in steps</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- =====================================================
+         STATS
+         data-count = the number to count up to (script.js).
+         These are sample values, not real data.
+         ===================================================== -->
+    <section class="wrap stats" aria-label="Platform statistics">
+      <div class="stat"><strong data-count="120">0</strong><span>Experiments covered</span></div>
+      <div class="stat"><strong data-count="2400">0</strong><span>Lab guides generated</span></div>
+      <div class="stat"><strong data-count="5">0</strong><span>Subjects supported</span></div>
+      <p class="sample-note">Sample values for demonstration only.</p>
+    </section>
+
+    <!-- =====================================================
+         SUBJECT CATEGORIES (id="guides" = "Lab Guides" nav link)
+         data-subject must match a key in EXPERIMENTS (script.js).
+         ===================================================== -->
+    <section class="section" id="guides">
+      <div class="wrap">
+        <div class="section-head">
+          <h2>Choose your subject</h2>
+          <p>Pick a category to see popular experiments for it.</p>
+        </div>
+
+        <div class="cards" id="subject-cards">
+          <button class="subject" data-subject="electronics"><span class="ico"><i class="fa-solid fa-microchip"></i></span><h3>Electronics &amp; Electrical</h3><p>Circuits, signals, machines and measurements.</p></button>
+          <button class="subject" data-subject="cs"><span class="ico"><i class="fa-solid fa-code"></i></span><h3>Computer Science</h3><p>Algorithms, data structures, networks and databases.</p></button>
+          <button class="subject" data-subject="physics"><span class="ico"><i class="fa-solid fa-atom"></i></span><h3>Physics</h3><p>Optics, mechanics, waves and modern physics.</p></button>
+          <button class="subject" data-subject="chemistry"><span class="ico"><i class="fa-solid fa-flask-vial"></i></span><h3>Chemistry</h3><p>Titrations, analysis and material properties.</p></button>
+          <button class="subject" data-subject="mechanical"><span class="ico"><i class="fa-solid fa-gears"></i></span><h3>Mechanical Engineering</h3><p>Thermodynamics, fluids, strength of materials.</p></button>
+        </div>
+      </div>
+    </section>
+
+    <!-- =====================================================
+         HOW IT WORKS (id="about" = "About" nav link)
+         An ordered list <ol> because the steps are a sequence.
+         ===================================================== -->
+    <section class="section alt" id="about">
+      <div class="wrap">
+        <div class="section-head">
+          <h2>How it works</h2>
+          <p>From experiment name to viva-ready in three steps.</p>
+        </div>
+
+        <ol class="steps">
+          <li><span class="step-no">1</span><h3>Enter your experiment name</h3><p>Type the experiment from your lab manual.</p></li>
+          <li><span class="step-no">2</span><h3>AI builds a structured guide</h3><p>Get theory, apparatus and procedure organised for you.</p></li>
+          <li><span class="step-no">3</span><h3>Study and practise</h3><p>Revise concepts, procedures and viva questions.</p></li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- =====================================================
+         POPULAR + RECENT EXPERIMENTS (id="experiments")
+         Both lists start empty; script.js fills them in.
+         ===================================================== -->
+    <section class="section" id="experiments">
+      <div class="wrap two-col">
+        <div>
+          <div class="section-head left">
+            <h2 id="popular-title">Popular lab experiments</h2>
+            <p>Tap one to fill the search box.</p>
+          </div>
+          <ul class="list" id="popular-list"></ul>
+        </div>
+
+        <div>
+          <div class="section-head left">
+            <h2>Recently explored</h2>
+            <p>Your last searches appear here.</p>
+          </div>
+          <ul class="list" id="recent-list"></ul>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- =====================================================
+       FOOTER
+       ===================================================== -->
+  <footer class="footer">
+    <div class="wrap foot-inner">
+      <a href="#home" class="logo"><span class="logo-mark"><i class="fa-solid fa-microscope"></i></span>LabMate AI</a>
+      <nav class="foot-links" aria-label="Footer">
+        <a href="#home">Home</a><a href="#experiments">My Experiments</a><a href="#guides">Lab Guides</a><a href="#about">About</a>
+      </nav>
+      <p>&copy; 2026 LabMate AI. Built for engineering students.</p>
+    </div>
+  </footer>
+
+  <!-- Loaded last so all the elements above exist when the script runs -->
+  <script src="script.js"></script>
+</body>
+</html>
